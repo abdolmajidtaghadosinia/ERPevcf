@@ -1,0 +1,24 @@
+name = "readiness"
+main = "src/worker.js"
+compatibility_date = "2025-09-01"
+
+# The patched page (public/index.html) is produced by `npm run build`; the Worker serves it itself so it can add security headers.
+[assets]
+directory = "./public"
+binding = "ASSETS"
+run_worker_first = true
+
+[[d1_databases]]
+binding = "DB"
+database_name = "readiness-db"
+# Replace with the id printed by `npx wrangler d1 create readiness-db` (local dev works with this placeholder).
+database_id = "00000000-0000-0000-0000-000000000000"
+migrations_dir = "migrations"
+
+[[r2_buckets]]
+binding = "FILES"
+bucket_name = "readiness-files"
+
+[vars]
+# PBKDF2 iterations (Workers allow at most 100000)
+PBKDF2_ITER = "100000"

@@ -1,0 +1,16 @@
+{
+  "name": "readiness-cloudflare",
+  "private": true,
+  "type": "module",
+  "description": "Readiness assessment on Cloudflare Workers + D1 + R2",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "dev": "npm run build && wrangler d1 migrations apply readiness-db --local && wrangler dev",
+    "db:migrate:remote": "wrangler d1 migrations apply readiness-db --remote",
+    "deploy": "npm run build && wrangler deploy",
+    "test": "node --test --test-reporter=spec test/smoke.test.mjs"
+  },
+  "devDependencies": {
+    "wrangler": "^4.0.0"
+  }
+}
